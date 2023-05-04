@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spoopy_life/presentations/navigations/router/routes.dart';
@@ -17,9 +18,16 @@ final GoRouter router = GoRouter(
     ShellRoute(
       navigatorKey: _shellNavigatorKey,
       builder: (context, state, child) {
-        if (Platform.isAndroid) {
+        if (kIsWeb) {
+          return const Scaffold(
+            body: Center(
+              child: Text("Build on Web"),
+            ),
+          );
+        }
+        if (defaultTargetPlatform == TargetPlatform.android) {
           return MobileNavigation(child: child);
-        } else if (Platform.isWindows) {
+        } else if (defaultTargetPlatform == TargetPlatform.windows) {
           return DesktopNavigation(child: child);
         } else {
           return const Scaffold(

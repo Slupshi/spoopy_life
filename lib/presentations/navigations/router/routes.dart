@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:spoopy_life/presentations/home/views/desktop/home_view.dart';
 import 'package:spoopy_life/presentations/home/views/mobile/home_view.dart';
@@ -32,6 +33,7 @@ final List<MyRoute> routes = [
     child: _child(
       mobileChild: const HomeViewMobile(),
       desktopChild: const HomeViewDesktop(),
+      webChild: const Center(child: Text("HomeWeb")),
     ),
   ),
   MyRoute(
@@ -41,6 +43,7 @@ final List<MyRoute> routes = [
     child: _child(
       mobileChild: const SleepViewMobile(),
       desktopChild: const SleepViewDesktop(),
+      webChild: const Center(child: Text("SleepWeb")),
     ),
   ),
 ];
@@ -48,7 +51,11 @@ final List<MyRoute> routes = [
 Widget _child({
   required Widget mobileChild,
   required Widget desktopChild,
+  required Widget webChild,
 }) {
+  if (kIsWeb) {
+    return webChild;
+  }
   if (Platform.isAndroid || Platform.isIOS) {
     return mobileChild;
   } else if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
