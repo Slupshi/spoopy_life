@@ -1,11 +1,10 @@
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spoopy_life/presentations/navigations/router/routes.dart';
 import 'package:spoopy_life/presentations/navigations/widgets/desktop_navigation.dart';
 import 'package:spoopy_life/presentations/navigations/widgets/mobile_navigation.dart';
+import 'package:spoopy_life/presentations/navigations/widgets/web_navigation.dart';
 
 // private navigators
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -19,13 +18,8 @@ final GoRouter router = GoRouter(
       navigatorKey: _shellNavigatorKey,
       builder: (context, state, child) {
         if (kIsWeb) {
-          return const Scaffold(
-            body: Center(
-              child: Text("Build on Web"),
-            ),
-          );
-        }
-        if (defaultTargetPlatform == TargetPlatform.android) {
+          return WebNavigation(child: child);
+        } else if (defaultTargetPlatform == TargetPlatform.android) {
           return MobileNavigation(child: child);
         } else if (defaultTargetPlatform == TargetPlatform.windows) {
           return DesktopNavigation(child: child);

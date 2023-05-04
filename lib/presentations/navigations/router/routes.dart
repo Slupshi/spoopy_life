@@ -55,8 +55,7 @@ Widget _child({
 }) {
   if (kIsWeb) {
     return webChild;
-  }
-  if (Platform.isAndroid || Platform.isIOS) {
+  } else if (Platform.isAndroid || Platform.isIOS) {
     return mobileChild;
   } else if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
     return Expanded(child: desktopChild);
