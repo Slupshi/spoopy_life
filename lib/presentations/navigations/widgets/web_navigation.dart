@@ -42,9 +42,7 @@ class _WebNavigationState extends State<WebNavigation> {
           Padding(
             padding: const EdgeInsets.only(right: 30),
             child: IconButton(
-              onPressed: () {
-                debugPrint("UserIcon clicked"); // TODO: Remove this
-              },
+              onPressed: () {},
               icon: const Icon(
                 Icons.person,
                 size: 25,
