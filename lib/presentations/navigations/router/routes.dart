@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:spoopy_life/presentations/home/views/desktop/home_view.dart';
 import 'package:spoopy_life/presentations/home/views/mobile/home_view.dart';
+import 'package:spoopy_life/presentations/home/views/web/home_view.dart';
 import 'package:spoopy_life/presentations/sleep/desktop/sleep_view.dart';
 import 'package:spoopy_life/presentations/sleep/mobile/sleep_view.dart';
 
@@ -33,7 +34,7 @@ final List<MyRoute> routes = [
     child: _child(
       mobileChild: const HomeViewMobile(),
       desktopChild: const HomeViewDesktop(),
-      webChild: const Center(child: Text("HomeWeb")),
+      webChild: const HomeViewWeb(),
     ),
   ),
   MyRoute(
