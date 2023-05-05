@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:spoopy_life/presentations/navigations/router/routes.dart';
+import 'package:spoopy_life/presentations/navigations/widgets/base_navigation.dart';
 
 class DesktopNavigation extends StatefulWidget {
   final Widget child;
@@ -13,17 +13,8 @@ class DesktopNavigation extends StatefulWidget {
   State<StatefulWidget> createState() => _DesktopNavigationState();
 }
 
-class _DesktopNavigationState extends State<DesktopNavigation> {
-  int get _currentIndex => _locationToIndex(GoRouter.of(context).location);
-
-  int _locationToIndex(String location) {
-    final index = routes.indexWhere((t) => location.startsWith(t.path));
-    // if index not found (-1), return 0
-    return index < 0 ? 0 : index;
-  }
-
-  bool _isSelected(MyRoute route) => _currentIndex == routes.indexOf(route);
-
+class _DesktopNavigationState extends State<DesktopNavigation>
+    with NavigationBase {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,10 +29,11 @@ class _DesktopNavigationState extends State<DesktopNavigation> {
               children: [
                 for (var route in routes)
                   GestureDetector(
-                    onTap: () => context.go(route.path),
+                    onTap: () => onItemTapped(context, routes.indexOf(route)),
                     child: Container(
-                      color:
-                          _isSelected(route) ? Colors.red : Colors.transparent,
+                      color: isCurrentRoute(context, route)
+                          ? Colors.red
+                          : Colors.transparent,
                       height: 50,
                       width: 200,
                       child: Center(
@@ -49,7 +41,7 @@ class _DesktopNavigationState extends State<DesktopNavigation> {
                           route.name,
                           style: TextStyle(
                             color: Colors.white,
-                            fontWeight: _isSelected(route)
+                            fontWeight: isCurrentRoute(context, route)
                                 ? FontWeight.bold
                                 : FontWeight.normal,
                           ),

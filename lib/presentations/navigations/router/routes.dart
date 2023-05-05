@@ -28,7 +28,7 @@ class MyRoute {
 final List<MyRoute> routes = [
   MyRoute(
     name: "Home",
-    path: "/home",
+    path: "/",
     icon: Icons.home,
     child: _child(
       mobileChild: const HomeViewMobile(),

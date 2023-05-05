@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:spoopy_life/presentations/navigations/router/routes.dart';
+import 'package:spoopy_life/presentations/navigations/widgets/base_navigation.dart';
 
 class WebNavigation extends StatefulWidget {
   final Widget child;
@@ -13,17 +13,7 @@ class WebNavigation extends StatefulWidget {
   State<StatefulWidget> createState() => _WebNavigationState();
 }
 
-class _WebNavigationState extends State<WebNavigation> {
-  int get _currentIndex => _locationToIndex(GoRouter.of(context).location);
-
-  int _locationToIndex(String location) {
-    final index = routes.indexWhere((t) => location.startsWith(t.path));
-    // if index not found (-1), return 0
-    return index < 0 ? 0 : index;
-  }
-
-  bool _isSelected(MyRoute route) => _currentIndex == routes.indexOf(route);
-
+class _WebNavigationState extends State<WebNavigation> with NavigationBase {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,11 +45,13 @@ class _WebNavigationState extends State<WebNavigation> {
             for (var route in routes) ...[
               InkWell(
                 mouseCursor: SystemMouseCursors.click,
-                onTap: () => context.go(route.path),
+                onTap: () => onItemTapped(context, routes.indexOf(route)),
                 child: Container(
                   height: 50,
                   width: 200,
-                  color: _isSelected(route) ? Colors.red : Colors.transparent,
+                  color: isCurrentRoute(context, route)
+                      ? Colors.red
+                      : Colors.transparent,
                   child: Center(child: Text(route.name)),
                 ),
               ),
